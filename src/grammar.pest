@@ -1,0 +1,44 @@
+// positron - parse and execute boolean expressions
+// Copyright (C) 2021 DevHyperCoder
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+// A "variable"
+var_name = { ASCII_ALPHANUMERIC  }
+
+// Implicit whitespace
+WHITESPACE = _{" "}
+
+// Gate definitions
+or_gate = {(s ~ ("+" ~ expr)+)}
+and_gate = {(s ~ ("." ~ expr)+)}
+not_gate = { sub_expr ~ "'" }
+
+// An Expression
+expr = _{
+      and_gate | or_gate   | not_gate | sub_expr
+}
+
+// Add the not gate here so negation actually works
+s = _{
+	not_gate | sub_expr
+}
+
+// A bracket expression or a variable name
+sub_expr= _{
+     var_name |  "(" ~ expr ~ ")" 
+}
+
+// Main Rule with SOI and EOI
+main = _{ SOI ~expr* ~ EOI}

@@ -1,0 +1,11 @@
+[package]
+name = "positron"
+edition = "2018"
+license = "GPL-3.0"
+version = "0.1.0"
+repository = "https://github.com/DevHyperCoder/positron.git"
+description = "parse and execute boolean expressions"
+
+[dependencies]
+pest = "2.0"
+pest_derive = "2.0"
