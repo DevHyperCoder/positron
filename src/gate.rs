@@ -34,13 +34,11 @@ impl Gate {
             Gate::Value(s) => {
                 let var_val = data.get(s.as_str());
                 if var_val.is_none() {
-                    return Err(Error::VariableNotFound(s))
+                    return Err(Error::VariableNotFound(s));
                 }
                 Ok(var_val.unwrap().to_owned()) // This is safe
-            },
-            Gate::Not(s) => {
-                s[0].clone().execute(data)
             }
+            Gate::Not(s) => s[0].clone().execute(data),
             Gate::Or(s) => {
                 let mut acc = false;
                 for val in s {

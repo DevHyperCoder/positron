@@ -23,7 +23,7 @@ use crate::{
 };
 use std::collections::HashMap;
 
-#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct TruthEntry {
     pub data: CircuitData,
     pub result: bool,
