@@ -30,6 +30,7 @@ use crate::{
 #[grammar = "grammar.pest"]
 pub struct ExprParser;
 
+#[derive(Clone)]
 pub struct Parsed {
     pub root_gate: Gate,
     pub variables: HashSet<String>,

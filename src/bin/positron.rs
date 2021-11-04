@@ -16,16 +16,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use positron::{circuit::Circuit, parser::Parsed};
+use positron::{circuit::Circuit, parser::Parsed, truth::truth};
 use std::{collections::HashMap, io, str::FromStr};
 
 fn main() {
     println!("positron");
-    print!("Enter expression: ");
+    println!("Enter expression: ");
     let mut input = String::new();
     io::stdin().read_line(&mut input).unwrap();
-    let parsed = Parsed::from_str(&input.trim()).unwrap();
+    let parsed = Parsed::from_str(input.trim()).unwrap();
 
+    println!("Should show truth or will you enter stuff ? true / false");
+    input.clear();
+    io::stdin().read_line(&mut input).unwrap();
+    let should_show_truth: bool = input.trim().parse().unwrap();
+    input.clear();
+
+    if should_show_truth {
+        // calculating truth table
+        let truth_entires = truth(parsed);
+        //println!("{:#?}",a);
+
+        for truth_entry in truth_entires {
+            println!("--");
+            for (_key, val) in truth_entry.data {
+                print!(" {} ", val);
+            }
+            print!(" {} ", truth_entry.result);
+            println!("--");
+        }
+
+        return;
+    }
     let mut data = HashMap::new();
 
     for var in parsed.variables {

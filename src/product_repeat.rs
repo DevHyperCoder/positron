@@ -16,9 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-pub mod circuit;
-pub mod error;
-pub mod gate;
-pub mod parser;
-pub mod product_repeat;
-pub mod truth;
+use itertools::{Itertools, MultiProduct};
+
+pub fn product_repeat<I>(it: I, repeat: usize) -> MultiProduct<I>
+where
+    I: Iterator + Clone,
+    I::Item: Clone,
+{
+    std::iter::repeat(it).take(repeat).multi_cartesian_product()
+}

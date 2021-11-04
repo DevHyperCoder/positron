@@ -20,10 +20,12 @@ use std::collections::HashMap;
 
 use crate::gate::Gate;
 
+pub type CircuitData = HashMap<String, bool>;
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Circuit {
     pub gate: Gate,
-    pub data: HashMap<String, bool>,
+    pub data: CircuitData,
 }
 
 impl<'a> Circuit {
