@@ -23,6 +23,7 @@ use crate::{
 };
 use std::collections::HashMap;
 
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 pub struct TruthEntry {
     pub data: CircuitData,
     pub result: bool,
@@ -51,7 +52,7 @@ pub fn truth(p: Parsed) -> Vec<TruthEntry> {
 
         results.push(TruthEntry {
             data: data.clone(),
-            result: circuit.execute(),
+            result: circuit.execute().unwrap(), // This is safe
         });
     }
     results

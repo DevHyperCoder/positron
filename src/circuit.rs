@@ -18,7 +18,7 @@
 
 use std::collections::HashMap;
 
-use crate::gate::Gate;
+use crate::{error::Result, gate::Gate};
 
 pub type CircuitData = HashMap<String, bool>;
 
@@ -29,7 +29,7 @@ pub struct Circuit {
 }
 
 impl<'a> Circuit {
-    pub fn execute(self) -> bool {
+    pub fn execute(self) -> Result<bool> {
         self.gate.execute(&self.data)
     }
 }

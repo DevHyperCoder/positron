@@ -16,6 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#[cfg(feature="serde")]
+#[macro_use]
+extern crate serde;
+
 pub mod circuit;
 pub mod error;
 pub mod gate;

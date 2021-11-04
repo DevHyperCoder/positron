@@ -63,7 +63,7 @@ fn main() {
         data,
     };
 
-    let res = circuit.execute();
+    let res = circuit.execute().unwrap();
 
     println!("Result: {}", res);
 }

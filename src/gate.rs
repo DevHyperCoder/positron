@@ -18,6 +18,8 @@
 
 use std::collections::HashMap;
 
+use crate::error::{Error, Result};
+
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Gate {
     And(Vec<Gate>),
@@ -27,38 +29,33 @@ pub enum Gate {
 }
 
 impl Gate {
-    pub fn execute(self, data: &HashMap<String, bool>) -> bool {
+    pub fn execute(self, data: &HashMap<String, bool>) -> Result<bool> {
         match self {
-            Gate::Value(s) => return data.get(s.as_str()).unwrap().to_owned(),
+            Gate::Value(s) => {
+                let var_val = data.get(s.as_str());
+                if var_val.is_none() {
+                    return Err(Error::VariableNotFound(s))
+                }
+                Ok(var_val.unwrap().to_owned()) // This is safe
+            },
             Gate::Not(s) => {
-                let values = s
-                    .into_iter()
-                    .map(|gate| gate.execute(data))
-                    .collect::<Vec<bool>>();
-                !values[0]
+                s[0].clone().execute(data)
             }
             Gate::Or(s) => {
-                let values = s
-                    .into_iter()
-                    .map(|gate| gate.execute(data))
-                    .collect::<Vec<bool>>();
-
                 let mut acc = false;
-                for value in values {
+                for val in s {
+                    let value = val.execute(data)?;
                     acc |= value;
                 }
-                acc
+                Ok(acc)
             }
             Gate::And(s) => {
-                let values = s
-                    .into_iter()
-                    .map(|gate| gate.execute(data))
-                    .collect::<Vec<bool>>();
                 let mut acc = true;
-                for value in values {
+                for gate in s {
+                    let value = gate.execute(data)?;
                     acc &= value;
                 }
-                acc
+                Ok(acc)
             }
         }
     }

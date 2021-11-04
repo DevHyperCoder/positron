@@ -30,6 +30,7 @@ use crate::{
 #[grammar = "grammar.pest"]
 pub struct ExprParser;
 
+#[cfg_attr(feature="serde", derive(Serialize, Deserialize))]
 #[derive(Clone)]
 pub struct Parsed {
     pub root_gate: Gate,
