@@ -20,6 +20,7 @@ use std::collections::HashMap;
 
 use crate::error::{Error, Result};
 
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Gate {
     And(Vec<Gate>),
