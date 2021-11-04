@@ -39,7 +39,10 @@ impl Gate {
                 }
                 Ok(var_val.unwrap().to_owned()) // This is safe
             }
-            Gate::Not(s) => s[0].clone().execute(data),
+            Gate::Not(s) => {
+               let val =  s[0].clone().execute(data)?;
+               return Ok(!val)
+            },
             Gate::Or(s) => {
                 let mut acc = false;
                 for val in s {

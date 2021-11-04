@@ -2,7 +2,7 @@
 name = "positron"
 edition = "2018"
 license = "GPL-3.0"
-version = "0.2.2"
+version = "0.2.3"
 repository = "https://github.com/DevHyperCoder/positron.git"
 description = "parse and execute boolean expressions"
 
