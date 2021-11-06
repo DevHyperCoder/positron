@@ -31,7 +31,7 @@ fn and() {
 
     let circuit = Circuit { gate, data };
 
-    assert_eq!(circuit.execute(), false);
+    assert_eq!(circuit.execute().unwrap(), false);
 }
 #[test]
 fn or() {
@@ -45,7 +45,7 @@ fn or() {
 
     let circuit = Circuit { gate, data };
 
-    assert_eq!(circuit.execute(), true);
+    assert_eq!(circuit.execute().unwrap(), true);
 }
 #[test]
 fn not() {
@@ -55,5 +55,5 @@ fn not() {
 
     let circuit = Circuit { gate, data };
 
-    assert_eq!(circuit.execute(), true);
+    assert_eq!(circuit.execute().unwrap(), true);
 }

@@ -20,15 +20,20 @@ use std::collections::HashMap;
 
 use crate::{error::Result, gate::Gate};
 
+/// Variable name to variable value mapping
 pub type CircuitData = HashMap<String, bool>;
 
+/// Main "Circuit". Contains the data and the root gate.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Circuit {
+    /// Root gate
     pub gate: Gate,
+    /// Data to execute the root gate
     pub data: CircuitData,
 }
 
 impl<'a> Circuit {
+    /// Execute the root gate with CircuitData
     pub fn execute(self) -> Result<bool> {
         self.gate.execute(&self.data)
     }

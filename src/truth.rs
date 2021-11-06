@@ -23,6 +23,8 @@ use crate::{
 };
 use std::collections::HashMap;
 
+/// Contains a data and boolean result
+/// Normally used as a Vec<TruthEntry> in which all possible values of each variables are put in
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct TruthEntry {
     pub data: CircuitData,
@@ -40,7 +42,9 @@ pub fn truth(p: Parsed) -> Vec<TruthEntry> {
 
     let mut results = vec![];
 
+    // One row of the truth table
     for i in product_repeat(bool_arr.iter(), repeat) {
+        // Insert to map
         for (idx, var) in variable_list.iter().enumerate() {
             data.insert(var.clone(), *i[idx]);
         }

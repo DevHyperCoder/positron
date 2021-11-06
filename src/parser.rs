@@ -30,6 +30,7 @@ use crate::{
 #[grammar = "grammar.pest"]
 pub struct ExprParser;
 
+/// Struct to represent a parsed output. Contains root_gate and the variables that were parsed out
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Clone)]
 pub struct Parsed {
@@ -57,6 +58,7 @@ impl FromStr for Parsed {
     }
 }
 
+/// Recursively parse the Pairs
 fn get_gate_tree_with_variables(expr: Pair<Rule>, values: &mut HashSet<String>) -> Gate {
     match expr.as_rule() {
         Rule::var_name => {

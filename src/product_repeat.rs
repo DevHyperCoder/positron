@@ -18,6 +18,7 @@
 
 use itertools::{Itertools, MultiProduct};
 
+/// Rust port of itertools.product(repeat)
 pub fn product_repeat<I>(it: I, repeat: usize) -> MultiProduct<I>
 where
     I: Iterator + Clone,

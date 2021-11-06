@@ -20,16 +20,26 @@ use std::collections::HashMap;
 
 use crate::error::{Error, Result};
 
+/// Gate enum
+/// Each Gate type (And, Or and Not) take in a Vec of other gates.
+/// Value Gate is a simple passthrough gate
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Gate {
+    /// Does boolean AND operation
     And(Vec<Gate>),
+    /// Does boolean OR operation
     Or(Vec<Gate>),
+    /// Does boolean NOT operation on the first elem
     Not(Vec<Gate>),
+    /// Evaluates to the content of the variable specified by inner string
     Value(String),
 }
 
 impl Gate {
+    /// Executes the Gate, recursively if required.
+    ///
+    /// Error: If variable not found, only happens in Value gate.
     pub fn execute(self, data: &HashMap<String, bool>) -> Result<bool> {
         match self {
             Gate::Value(s) => {
@@ -40,9 +50,9 @@ impl Gate {
                 Ok(var_val.unwrap().to_owned()) // This is safe
             }
             Gate::Not(s) => {
-               let val =  s[0].clone().execute(data)?;
-               return Ok(!val)
-            },
+                let val = s[0].clone().execute(data)?;
+                Ok(!val)
+            }
             Gate::Or(s) => {
                 let mut acc = false;
                 for val in s {
